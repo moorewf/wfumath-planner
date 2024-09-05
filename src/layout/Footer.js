@@ -22,11 +22,15 @@ const Footer = () => {
         <Link component="a" href="https://sites.google.com/wfu.edu/frank-moore" target="blank">
         Frank Moore
         </Link>
-        . View the original project on {' '}
+        . View {' '}
+        <Link component="a" href="https://github.com/moorewf/wfumath-planner" target="blank">
+	this project
+	</Link>
+        {' '} or the {' '}
         <Link component="a" href="https://github.com/nitinankad/utdegree-planner" target="blank">
-        GitHub
+        original project
         </Link>
-        .
+        {' '} on Github.
       </Typography>
     </div>
   );
