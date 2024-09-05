@@ -34,6 +34,21 @@ const dragWithinSemester = (board, sourceList, sourceIndex, destinationIndex, so
   return newBoard;
 };
 
+    const getHours = (courseName) => {
+        // const pattern = new RegExp(/\d{4}/);
+	const pattern = new RegExp(/(?<=\()[^()]*?(\d+(\.\d+)?)/);
+	
+        let creditHours = 0;
+
+        if (pattern.test(courseName)) {
+            let coursePrefix = courseName.match(pattern);
+            console.log(coursePrefix);
+            creditHours = parseFloat(coursePrefix);
+        }
+
+        return creditHours;
+    }
+
 // validate all courses on the board
 const validateBoard = (board) => {
   var valid = true;
@@ -43,17 +58,19 @@ const validateBoard = (board) => {
       var sem = year[j]["courses"];
       var total = 0;
       for (var k = 0; k < sem.length; k++) {
-        var name = sem[k]["courseName"].match('[A-Z]+ [0-9]+')
+        var name = sem[k]["courseName"].match('[A-Z]+ [0-9]+[A-Za-z]?')
         if (sem[k].manualApprove === true) {
           sem[k]["valid"] = '1';
-          if (name && name.length === 1)
-            total += name[0].split(' ')[1].charAt(1) - '0';
-          else
-            total += 3;
+	  total += getHours(sem[k]["courseName"]);
+	  //if (name && name.length === 1)
+          //  total += name[0].split(' ')[1].charAt(1) - '0';
+          //else
+          //  total += 3;
           continue;
         }
         if (name && name.length === 1) {
-          var creditHours = name[0].split(' ')[1].charAt(1) - '0';
+	  var creditHours = getHours(sem[k]["courseName"]);
+	  // var creditHours = name[0].split(' ')[1].charAt(1) - '0';
           total += creditHours;
 
           name = name[0].replace(' ', '').toLowerCase();
@@ -102,7 +119,7 @@ const validateReq = (board, course, yearId, semId, req) => {
     for (var j = 0; j < limit; j++) {
       var sem = year[j]["courses"];
       for (var k = 0; k < sem.length; k++) {
-        var currName = sem[k].courseName.match('[A-Z]+ [0-9]+')
+        var currName = sem[k].courseName.match('[A-Z]+ [0-9]+[A-Za-z]?')
         if (evalStr.includes(currName)) {
           // replace course with true in prerequisite string if taken previously
           evalStr = evalStr.replace(currName, 'true');
@@ -111,7 +128,7 @@ const validateReq = (board, course, yearId, semId, req) => {
     }
   }
   // replace all other 
-  evalStr = evalStr.replace(/[A-Z]+ [0-9]+/g, "false");
+  evalStr = evalStr.replace(/[A-Z]+ [0-9]+[A-Za-z]?/g, "false");
   // eval is a necessary evil
   // eslint-disable-next-line
   var res = eval(evalStr);

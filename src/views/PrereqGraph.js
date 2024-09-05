@@ -59,7 +59,7 @@ const PrereqGraph = (props) => {
             for (var year of board) {
                 for (var semester of year["semesters"]) {
                     for (var course of semester["courses"]) {
-                        var pre = course["courseName"].match("[A-Z]+ [0-9]+")
+                        var pre = course["courseName"].match("[A-Z]+ [0-9]+[A-Za-z]?")
                         if (!pre)
                             pre = [course["courseName"]]
                         nodepends.push({ id: pre[0], level: semId });
@@ -77,7 +77,7 @@ const PrereqGraph = (props) => {
                             if (course["Prereq"]) {
                                 var preq = course["Prereq"];
                                 if(typeof preq === 'string' || preq instanceof String) {
-                                    prereqs = Array.from(preq.matchAll("[A-Z]+ [0-9]+"));
+                                    prereqs = Array.from(preq.matchAll("[A-Z]+ [0-9]+[A-Za-z]?"));
                                 } else {
                                     console.log(course);
                                 }

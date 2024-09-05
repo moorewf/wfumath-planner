@@ -71,7 +71,7 @@ const TableView = (props) => {
 
     const courseNameFormat = (courseName) => {
         let coursePrefix = "";
-        const pattern = new RegExp(/[A-Z]+ \d{4}|\d{3} Core Course/);
+        const pattern = new RegExp(/[A-Z]+ [0-9]+[A-Za-z]?/);
 
         if (pattern.test(courseName)) {
             coursePrefix = courseName.match(pattern);
@@ -84,14 +84,15 @@ const TableView = (props) => {
     }
 
     const getHours = (courseName) => {
-        const pattern = new RegExp(/\d{4}/);
-        
-        let creditHours = 3;
+        // const pattern = new RegExp(/\d{4}/);
+	const pattern = new RegExp(/(?<=\()[^()]*?(\d+(\.\d+)?)/);
+	
+        let creditHours = 0;
 
         if (pattern.test(courseName)) {
             let coursePrefix = courseName.match(pattern);
             console.log(coursePrefix);
-            creditHours = parseInt(coursePrefix[0][1]);
+            creditHours = parseFloat(coursePrefix);
         }
 
         return creditHours;

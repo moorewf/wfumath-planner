@@ -3,7 +3,7 @@ import { makeStyles, Hidden } from "@material-ui/core";
 import Drawer from '@material-ui/core/Drawer';
 import LoadCourses from './LoadCourses';
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 const useStyles = makeStyles(theme => ({
   drawer: {

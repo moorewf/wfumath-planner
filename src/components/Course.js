@@ -94,7 +94,7 @@ const Course = (props) => {
   };
 
   let coursePrefix = "";
-  const pattern = new RegExp(/[A-Z]+ \d{4}|\d{3} Core Course/);
+  const pattern = new RegExp(/[A-Z]+ [0-9]+[A-Za-z]?/);
 
   if (pattern.test(courseName)) {
     coursePrefix = courseName.match(pattern);

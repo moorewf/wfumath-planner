@@ -18,19 +18,11 @@ const Footer = () => {
         <Link component="a" href="https://ankad.io" target="blank">
         Nitin Ankad
         </Link>
-        . Special thanks to {' '}
-        <Link component="a" href="https://www.linkedin.com/in/sunny-guan/" target="blank">
-        Sunny Guan
+        {' '} et al, and adapted for the Wake Forest Mathematics Department by {' '}
+        <Link component="a" href="https://sites.google.com/wfu.edu/frank-moore" target="blank">
+        Frank Moore
         </Link>
-        {' '} and {' '}
-        <Link component="a" href="https://github.com/travisdula" target="blank">
-        Travis A. Dula
-        </Link>
-        {' '} for contributing. Data obtained from {' '}
-        <Link component="a" href="https://www.utdmercury.com/" target="blank">
-        The Mercury
-        </Link>
-        . View the project on {' '}
+        . View the original project on {' '}
         <Link component="a" href="https://github.com/nitinankad/utdegree-planner" target="blank">
         GitHub
         </Link>

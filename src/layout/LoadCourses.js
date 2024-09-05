@@ -12,7 +12,7 @@ import { connect } from 'react-redux';
 import { setBoard } from "../actions/boardActions";
 import { addPDFCourses } from "../actions/boardActions";
 import Button from '@material-ui/core/Button';
-import degreeData from "../constants/degreePlans";
+import { blankDegree, degreeData } from "../constants/degreePlans";
 import { loadJsonCourses, exportCourses } from "../actions/courseActions";
 import { useHistory } from "react-router-dom";
 
@@ -46,14 +46,25 @@ const LoadCourses = (props) => {
   };
 
   const [state, setState] = useState({
-    openMenu: false,
-    needUpdate: false
+      openMenu: false,
+      needUpdate: false,
+      degreeSelected: "",
+      schoolSelected: ""
   });
 
   const handleExport = () => {
     // exports the board as a JSON object for importing later on
     // currently sends out an alert from the dispatched function
     dispatch(exportCourses());
+  }
+
+  const handleClear = () => {
+    setState({
+      ...state,
+	schoolSelected: "",
+	degreeSelected: ""
+    });
+      dispatch(setBoard(blankDegree));
   }
 
   const handleClick = () => {
@@ -63,8 +74,14 @@ const LoadCourses = (props) => {
     });
   };
 
-  const handleLoadDegreePlan = (e, schoolIndex) => {
+    const handleLoadDegreePlan = (e, schoolName, schoolIndex) => {
     const selectedDegreeName = e.target.textContent;
+    setState({
+      ...state,
+	openMenu: !state.openMenu,
+	schoolSelected: schoolName,
+	degreeSelected: selectedDegreeName
+    });
     dispatch(setBoard(degreeData[schoolIndex].degreePlans[selectedDegreeName]));
   };
 
@@ -99,12 +116,12 @@ const LoadCourses = (props) => {
   }
 
   return (
-    <List>
+      <List>  
       <ListItem button onClick={handleClick}>
         <ListItemIcon>
           <GetAppIcon />
         </ListItemIcon>
-        <ListItemText primary={`Load courses`} />
+        <ListItemText primary={`Sample Pathways`} />
         {state.openMenu ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
       <Collapse in={state.openMenu} timeout="auto" unmountOnExit>
@@ -116,7 +133,7 @@ const LoadCourses = (props) => {
               </ListItem>
               {Object.keys(school.degreePlans).map((degree, degreeIndex) => (
                 <div key={degree}>
-                  <ListItem button className={classes.listItem} onClick={e => handleLoadDegreePlan(e, schoolIndex)}>
+                    <ListItem button className={classes.listItem} onClick={e => handleLoadDegreePlan(e, school.schoolName, schoolIndex)}>
                     <ListItemIcon>
                       <SchoolIcon />
                     </ListItemIcon>
@@ -128,6 +145,12 @@ const LoadCourses = (props) => {
           ))}
         </List>
       </Collapse>
+	  <ListItem text>
+	      <ListItemText primary={state.schoolSelected} />
+	  </ListItem>	      
+	  <ListItem text>
+	      <ListItemText primary={state.degreeSelected} />
+	  </ListItem>	      
       <ListItem>
         <input
           accept="text/plain"
@@ -138,16 +161,14 @@ const LoadCourses = (props) => {
           onChange={e => handleDegreeUpload(e)}
         />
         <label htmlFor="file">
-          <Button variant="contained" component="span" className={classes.button}>
-            Import
-          </Button>
+          <Button variant="contained" component="span" className={classes.button}>Import</Button>
         </label>
       </ListItem>
       <ListItem>
         <Button variant="contained" onClick={handleExport}>Export</Button>
       </ListItem>
       <ListItem>
-        <Button variant="contained" color="primary" onClick={redirectGraph}>Show Graph</Button>
+        <Button variant="contained" onClick={handleClear}>Clear</Button>
       </ListItem>
       <ListItem>
         <Button variant="contained" color="primary" onClick={redirectTable}>Show Table</Button>

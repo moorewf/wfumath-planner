@@ -5,7 +5,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 const useStyles = makeStyles(theme => ({
   root: {
     zIndex: theme.zIndex.drawer + 1,
-    backgroundColor: '#c75b12',
+    backgroundColor: '#a67f31',
   },
   menuIcon: {
     marginRight: theme.spacing(1),
@@ -31,7 +31,7 @@ const Topbar = (props) => {
         </IconButton>
 
         <Typography variant="h6" noWrap>
-          UTDegree Planner
+          Wake Forest Mathematics Degree Planner
         </Typography>
       </Toolbar>
     </AppBar>
