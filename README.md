@@ -26,3 +26,7 @@
 1. Install the requirements with ```npm install```
 
 2. Run the project with ```npm start```
+
+## Acknowledgements
+
+This web app was forked from [utdegree-planner](https://github.com/nitinankad/utdegree-planner).
